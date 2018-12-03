@@ -1,6 +1,7 @@
 const https = require('https');
 
-function getAndPrintHTMLChunks() {
+
+function getAndPrintHTML() {
 
   var requestOptions = {
     host: 'syntantris.github.io',
@@ -8,17 +9,17 @@ function getAndPrintHTMLChunks() {
   };
 
   https.get(requestOptions, function(res){
-
     res.setEncoding('utf8');
 
-    res.on('data', function(data) {
-      console.log('Chunk Received. Length', data.length);
-    });
+    var fullData = '';
+    res.on('data', function(data){
+      fullData += data;
+    })
 
     res.on('end', function(){
-      console.log('Response stream complete');
-    });
-  });
+      console.log('the full data', fullData);
+    })
+  })
 }
 
-getAndPrintHTMLChunks();
+getAndPrintHTML();
